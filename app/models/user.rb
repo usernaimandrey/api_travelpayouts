@@ -4,5 +4,8 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :email, uniqueness: { case_sensitive: false }
   validates :name, presence: true
-  validetes :name, length: { minimum: 2 }
+  validates :name, length: { minimum: 2 }
+
+  has_many :subscriptions, dependent: :destroy
+  has_many :programs, through: :subscriptions
 end

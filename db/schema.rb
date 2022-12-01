@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_30_234249) do
+ActiveRecord::Schema.define(version: 2022_12_01_000827) do
 
   create_table "programs", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "program_id", null: false
+    t.string "state", default: "active"
+    t.string "cause"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["program_id"], name: "index_subscriptions_on_program_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -27,4 +38,6 @@ ActiveRecord::Schema.define(version: 2022_11_30_234249) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "subscriptions", "programs"
+  add_foreign_key "subscriptions", "users"
 end
