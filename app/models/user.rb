@@ -8,4 +8,6 @@ class User < ApplicationRecord
 
   has_many :subscriptions, dependent: :destroy
   has_many :programs, through: :subscriptions
+
+  has_secure_password
 end
