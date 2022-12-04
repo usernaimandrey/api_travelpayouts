@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class SessionsController < Api::V1::ApplicationController
@@ -11,9 +13,8 @@ module Api
         else
           render json: { status: :unauthorized, error: 'Check email or password' }
         end
-
       rescue ActiveRecord::RecordNotFound => e
-        render json: { satus: :not_found, error: e  }
+        render json: { satus: :not_found, error: e }
       end
 
       def destroy

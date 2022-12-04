@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class AuthController < Api::V1::ApplicationController
@@ -11,7 +13,6 @@ module Api
         else
           render json: { status: :unprocessable_entity, error: user.errors.full_messages }
         end
-
       rescue StandardError
         render json: { status: 422, error: 'User alredy exist' }
       end

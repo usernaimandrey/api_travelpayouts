@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 require 'faker'
 
 10.times do
   attrs = {
     email: Faker::Internet.email,
-    name: Faker::Name.name 
+    name: Faker::Name.name
   }
   user = User.new(attrs)
   user.save!

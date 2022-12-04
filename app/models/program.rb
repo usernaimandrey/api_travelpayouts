@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Program < ApplicationRecord
   validates :title, presence: true
   validates :title, length: { minimum: 2, maximum: 50 }
