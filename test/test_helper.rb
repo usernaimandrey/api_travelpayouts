@@ -13,3 +13,14 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+class ActionDispatch::IntegrationTest
+  include AuthConcern
+
+  def sign_in_as(name)
+    user = users(name)
+
+    post api_v1_sessions_path, params: { values: { email: user.email, password: 'password' } }
+    user
+  end
+end

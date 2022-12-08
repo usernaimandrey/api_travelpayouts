@@ -15,7 +15,7 @@ module Api
             render json: { status: :unprocessable_entity, error: subscription.errors.full_messages }
           end
         rescue StandardError
-          render json: { status: :forbidden, error: I18n.t('subscrip_alredy_exist') }
+          render json: { error: I18n.t('subscrip_alredy_exist') }, status: :forbidden
         end
 
         def destroy

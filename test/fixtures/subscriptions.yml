@@ -3,11 +3,11 @@
 one:
   user: one
   program: one
-  state: MyString
+  state: active
   cause: MyString
 
 two:
   user: two
   program: two
-  state: MyString
+  state: active
   cause: MyString

@@ -4,6 +4,7 @@ module Api
   module V1
     class AuthController < Api::V1::ApplicationController
       def sign_up
+        # debugger
         user = User.find_by(email: user_params[:email])
         raise if user
 
