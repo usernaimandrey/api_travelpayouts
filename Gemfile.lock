@@ -186,6 +186,9 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.5.4-x86_64-linux)
+    swagger-docs (0.2.9)
+      activesupport (>= 3)
+      rails (>= 3)
     thor (1.2.1)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -215,6 +218,7 @@ DEPENDENCIES
   rubocop-rails
   spring
   sqlite3 (~> 1.4)
+  swagger-docs
   tzinfo-data
 
 RUBY VERSION

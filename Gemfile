@@ -52,3 +52,5 @@ gem 'enumerize', '~> 2.3', '>= 2.3.1'
 gem 'rails-i18n'
 
 gem 'jwt'
+
+gem 'swagger-docs'

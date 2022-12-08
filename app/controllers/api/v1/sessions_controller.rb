@@ -3,6 +3,10 @@
 module Api
   module V1
     class SessionsController < Api::V1::ApplicationController
+      include Swagger::Docs::Methods
+
+      swagger_controller :sessions, 'Auth in api'
+
       def create
         user = User.find_by(email: session_params[:email])
         raise ActiveRecord::RecordNotFound unless user
@@ -16,6 +20,16 @@ module Api
       rescue ActiveRecord::RecordNotFound => e
         render json: { satus: :not_found, error: e }
       end
+
+      # swagger_api :create do
+      #   summary 'Sign in in this app'
+      #   notes 'This signed in user endpoin'
+      #   param :form, :email, :password, :string, 'email user'
+      #   param :form, :password, :string, 'password user'
+      #   response :unauthorized, 'check email or password'
+      #   response :success
+      #   response :not_found, 'user not found'
+      # end
 
       def destroy
         return unless signed_in?

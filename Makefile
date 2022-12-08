@@ -1,3 +1,5 @@
+include make-compose.mk
+
 setup:
 	bin/setup
 	bin/rails db:seed
