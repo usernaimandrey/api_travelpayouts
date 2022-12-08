@@ -11,7 +11,7 @@ module Api
           sign_in(user)
           render json: { status: :success, payload: payload(user) }
         else
-          render json: { status: :unauthorized, error: 'Check email or password' }
+          render json: { status: :unauthorized, error: I18n.t('check_email') }
         end
       rescue ActiveRecord::RecordNotFound => e
         render json: { satus: :not_found, error: e }

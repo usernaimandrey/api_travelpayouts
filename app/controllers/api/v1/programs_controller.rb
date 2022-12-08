@@ -4,9 +4,9 @@ module Api
   module V1
     class ProgramsController < Api::V1::ApplicationController
       def index
-        @programs = Program.all
+        programs = Program.all
 
-        render json: @programs
+        render json: programs
       end
     end
   end

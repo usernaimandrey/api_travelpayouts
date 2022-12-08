@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require 'faker'
+require 'bcrypt'
 
 10.times do
   attrs = {
     email: Faker::Internet.email,
-    name: Faker::Name.name
+    name: Faker::Name.name,
+    password_digest: BCrypt::Password.create('password')
   }
   user = User.new(attrs)
   user.save!

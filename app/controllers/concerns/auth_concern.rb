@@ -23,7 +23,7 @@ module AuthConcern
       render json: { errors: ['Not Authenticated'] }, status: :unauthorized
       return
     end
-    User.find(auth_token[:user_id])
+    @current_user = User.find(auth_token[:user_id])
   rescue JWT::VerificationError, JWT::DecodeError
     render json: { errors: ['Not Authenticated'] }, status: :unauthorized
   end
