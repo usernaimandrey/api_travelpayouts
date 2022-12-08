@@ -32,3 +32,4 @@
 en:
   user_exist: User alredy exist!
   check_email: Check login and password!
+  bane_exist: User alredy baned!

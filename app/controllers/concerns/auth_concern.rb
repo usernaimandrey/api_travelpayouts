@@ -11,7 +11,11 @@ module AuthConcern
   end
 
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    @current_user ||= User.find_by(id: auth_token[:user_id])
+  end
+
+  def admin_signed_in?
+    current_user.admin?
   end
 
   def signed_in?

@@ -85,6 +85,8 @@ GEM
       activesupport
     concurrent-ruby (1.1.10)
     crass (1.0.6)
+    enumerize (2.5.0)
+      activesupport (>= 3.2)
     erubi (1.11.0)
     ffi (1.15.5)
     globalid (1.0.0)
@@ -202,6 +204,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.4)
   byebug
+  enumerize (~> 2.3, >= 2.3.1)
   faker!
   jwt
   listen (~> 3.3)

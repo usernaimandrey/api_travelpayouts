@@ -47,6 +47,8 @@ gem 'active_model_serializers', '~> 0.10.0'
 
 gem 'aasm'
 
+gem 'enumerize', '~> 2.3', '>= 2.3.1'
+
 gem 'rails-i18n'
 
 gem 'jwt'

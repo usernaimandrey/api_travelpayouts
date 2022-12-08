@@ -15,6 +15,10 @@ Rails.application.routes.draw do
         resources :programs, only: :index do
           post 'search', on: :collection
         end
+
+        namespace :admin do
+          resources :banes, only: %i[create destroy]
+        end
       end
     end
   end
