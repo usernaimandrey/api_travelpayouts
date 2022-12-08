@@ -6,6 +6,8 @@ class Program < ApplicationRecord
   validates :description, presence: true
   validates :description, length: { minimum: 5, maximum: 500 }
 
-  has_many :subscriptions, dependent: :destroy
-  has_many :users, through: :subscriptions
+  has_many :banes, class_name: 'Bane', dependent: :destroy
+  has_many :subscriptions, class_name: 'Subscription', dependent: :destroy
+  has_many :user_subscriptions, through: :subscriptions, source: :user
+  has_many :user_banes, through: :banes, source: :user
 end

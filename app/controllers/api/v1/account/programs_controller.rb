@@ -4,8 +4,10 @@ module Api
   module V1
     module Account
       class ProgramsController < Api::V1::Account::ApplicationController
+        # available programs
         def index
-          programs = @current_user.programs
+          banned_ids = @current_user.program_banes.select(:id)
+          programs = Program.where.not(id: banned_ids)
 
           render json: programs
         end

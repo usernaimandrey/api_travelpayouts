@@ -11,8 +11,9 @@ module Api
           render json: { satus: :not_found, error: e }
         end
 
+        # all programs current user
         def programs
-          programs = @current_user.programs
+          programs = @current_user.program_subscriptions
 
           render json: programs
         end
