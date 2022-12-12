@@ -1,13 +1,7 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  user_id: 1
-  program_id: 1
-  user: one
-  program: one
+  user: three
+  program: three
 
 two:
-  user_id: 1
-  program_id: 1
-  user: two
-  program: two
+  user: one
+  program: one

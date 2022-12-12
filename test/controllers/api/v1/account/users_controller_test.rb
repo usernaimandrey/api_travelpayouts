@@ -15,4 +15,10 @@ class Api::V1::Account::UsersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unauthorized
   end
+
+  test 'users program' do
+    get programs_api_v1_account_users_path, headers: { Authorization: "Bearer #{@jwt_token}" }, as: :json
+
+    assert_response :success
+  end
 end

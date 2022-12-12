@@ -7,16 +7,15 @@ module Api
         class BanesController < Api::V1::Account::Admin::ApplicationController
           def create
             bane = Bane.find_or_initialize_by(banes_params)
-
             raise if bane.persisted?
 
             if bane.save
-              render json: { status: :success }
+              render json: bane
             else
-              render json: { status: :unprocessable_entity, error: bane.errors.full_messages }
+              render json: { error: bane.errors.full_messages }, status: :unprocessable_entity
             end
           rescue StandardError
-            render json: { status: :forbidden, error: I18n.t('bane_exist') }
+            render json: { error: I18n.t('bane_exist') }, status: :forbidden
           end
 
           def destroy

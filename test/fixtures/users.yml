@@ -11,3 +11,7 @@ one:
 two:
   <<: *DEFAULTS
   role: admin
+
+three:
+  <<: *DEFAULTS
+  role: user
