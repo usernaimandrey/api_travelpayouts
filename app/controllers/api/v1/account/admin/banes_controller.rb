@@ -22,7 +22,7 @@ module Api
             bane = Bane.find(params[:id])
 
             bane.destroy
-            render json: { status: success }
+            render json: { status: :success }
           rescue ActiveRecord::RecordNotFound => e
             render json: { status: :not_found, error: e }
           end

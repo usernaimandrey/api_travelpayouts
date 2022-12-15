@@ -13,12 +13,13 @@ module Api
 
         if user.authenticate(session_params[:password])
           sign_in(user)
-          render json: { status: :success, payload: payload(user) }
+          render json: { payload: payload(user) }
         else
           render json: { status: :unauthorized, error: I18n.t('check_email') }
         end
       rescue ActiveRecord::RecordNotFound => e
-        render json: { satus: :not_found, error: e }
+        Rails.logger.debug e
+        render json: { satus: :not_found, error: I18n.t('user_not_found', email: session_params[:email]) }
       end
 
       # swagger_api :create do

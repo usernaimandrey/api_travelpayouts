@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::Account::ProgramsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)

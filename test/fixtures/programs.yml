@@ -5,7 +5,7 @@ one:
   description: MyText
 
 two:
-  title: MyString
+  title: UniqTitle
   description: MyText
 
 three:

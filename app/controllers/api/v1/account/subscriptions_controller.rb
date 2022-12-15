@@ -22,7 +22,7 @@ module Api
           subscription = Subscription.find(params[:id])
 
           subscription.destroy
-          render json: { satus: :success }
+          render json: { status: :success }
         rescue ActiveRecord::RecordNotFound => e
           render json: { status: :unprocessable_entity, error: e }
         end

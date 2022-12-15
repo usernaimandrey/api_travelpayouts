@@ -12,10 +12,10 @@ module Api
           private
 
           def admin_authenticate_request!
-            unless @current_user.admin?
-              render json: { errors: ['Not Authenticated'] }, status: :unauthorized
-              return
-            end
+            return if @current_user.admin?
+
+            render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+            nil
           end
         end
       end

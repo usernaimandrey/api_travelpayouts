@@ -8,6 +8,7 @@ module Api
           user = User.find(params[:id])
           render json: user
         rescue ActiveRecord::RecordNotFound => e
+          Rails.logger.debug e
           render json: { satus: :not_found, error: e }
         end
 

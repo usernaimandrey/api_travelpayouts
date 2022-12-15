@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'test_helper'
+
 class Api::V1::Account::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
@@ -7,36 +9,28 @@ class Api::V1::Account::SubscriptionsControllerTest < ActionDispatch::Integratio
     @program = programs(:two)
   end
 
-  test '#create' do
+  test 'create subscription' do
     post api_v1_account_subscriptions_path, headers: { Authorization: "Bearer #{@jwt_token}" }, params: { user_id: @user.id, program_id: @program.id }, as: :json
 
-    @user.reload
+    expected = { status: :success }.to_json
 
-    new_subscriptin = @user.program_subscriptions.find_by(id: @program.id)
-
-    assert_response :success
-    assert { new_subscriptin }
+    assert { expected == response.body }
   end
 
-  test '#create duble subscriptions' do
+  test 'subscription alredy exist' do
     program = programs(:one)
     post api_v1_account_subscriptions_path, headers: { Authorization: "Bearer #{@jwt_token}" }, params: { user_id: @user.id, program_id: program.id }, as: :json
 
-    @user.reload
+    expected = { error: I18n.t('subscrip_alredy_exist') }.to_json
 
-    new_subscriptin = @user.program_subscriptions.find_by(id: @program.id)
-
-    assert_response :forbidden
-    assert_not(new_subscriptin)
+    assert { expected == response.body }
   end
 
-  test '#destroy' do
+  test 'destroy subscribers' do
     program = programs(:one)
     delete api_v1_account_subscription_path(program), headers: { Authorization: "Bearer #{@jwt_token}" }
 
-    subscription = @user.program_subscriptions.find_by(id: program.id)
-
-    assert_not(subscription)
-    assert_response :success
+    expected = { status: :success }.to_json
+    assert { expected == response.body }
   end
 end

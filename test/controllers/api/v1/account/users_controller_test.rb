@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::Account::UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
@@ -11,7 +13,7 @@ class Api::V1::Account::UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#show unauthtorize user' do
-    get api_v1_account_user_path(@user), headers: { Authorization: "Bearer" }, as: :json
+    get api_v1_account_user_path(@user), headers: { Authorization: 'Bearer' }, as: :json
 
     assert_response :unauthorized
   end
