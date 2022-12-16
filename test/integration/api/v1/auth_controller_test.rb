@@ -35,7 +35,7 @@ class Api::V1::AuthControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'auth whith invalid params' do
-    user = User.new
+    user = Api::V1::SignUpForm.new
     user.save
     expected = { status: :unprocessable_entity, error: user.errors.full_messages }.to_json
 

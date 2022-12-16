@@ -8,18 +8,19 @@ module Api
       swagger_controller :sessions, 'Auth in api'
 
       def create
-        user = User.find_by(email: session_params[:email])
+        form = Api::V1::SignInForm.new(params)
+        user = form.user
         raise ActiveRecord::RecordNotFound unless user
 
-        if user.authenticate(session_params[:password])
-          sign_in(user)
+        if form.valid?
+          sign_in(form.user)
           render json: { payload: payload(user) }
         else
           render json: { status: :unauthorized, error: I18n.t('check_email') }
         end
       rescue ActiveRecord::RecordNotFound => e
         Rails.logger.debug e
-        render json: { satus: :not_found, error: I18n.t('user_not_found', email: session_params[:email]) }
+        render json: { satus: :not_found, error: I18n.t('user_not_found', email: form.email) }
       end
 
       # swagger_api :create do
@@ -37,12 +38,6 @@ module Api
 
         sign_out
         render json: { status: :success }
-      end
-
-      private
-
-      def session_params
-        params.permit(:email, :password)
       end
     end
   end

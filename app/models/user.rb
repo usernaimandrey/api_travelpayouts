@@ -3,13 +3,6 @@
 class User < ApplicationRecord
   extend Enumerize
 
-  before_save { email == email.downcase }
-
-  validates :email, presence: true
-  validates :email, uniqueness: { case_sensitive: false }
-  validates :name, presence: true
-  validates :name, length: { minimum: 2 }
-
   enumerize :role, in: %i[user admin], default: :user, predicates: true
 
   has_many :banes, class_name: 'Bane', dependent: :destroy
@@ -18,4 +11,8 @@ class User < ApplicationRecord
   has_many :program_subscriptions, through: :subscriptions, source: :program
 
   has_secure_password
+
+  def valid_password?(password)
+    authenticate(password)
+  end
 end

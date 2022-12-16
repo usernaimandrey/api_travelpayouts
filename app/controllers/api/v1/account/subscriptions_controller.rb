@@ -5,9 +5,7 @@ module Api
     module Account
       class SubscriptionsController < Api::V1::Account::ApplicationController
         def create
-          subscription = Subscription.find_or_initialize_by(subscription_params)
-
-          raise if subscription.persisted?
+          subscription = Api::V1::Account::SubscriptionForm.new(params)
 
           if subscription.save
             render json: { status: :success }
@@ -25,12 +23,6 @@ module Api
           render json: { status: :success }
         rescue ActiveRecord::RecordNotFound => e
           render json: { status: :unprocessable_entity, error: e }
-        end
-
-        private
-
-        def subscription_params
-          params.permit(:user_id, :program_id)
         end
       end
     end

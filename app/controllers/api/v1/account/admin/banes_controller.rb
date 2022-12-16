@@ -6,8 +6,7 @@ module Api
       module Admin
         class BanesController < Api::V1::Account::Admin::ApplicationController
           def create
-            bane = Bane.find_or_initialize_by(banes_params)
-            raise if bane.persisted?
+            bane = Api::V1::Account::Admin::BaneForm.new(params)
 
             if bane.save
               render json: bane
@@ -25,12 +24,6 @@ module Api
             render json: { status: :success }
           rescue ActiveRecord::RecordNotFound => e
             render json: { status: :not_found, error: e }
-          end
-
-          private
-
-          def banes_params
-            params.permit(:user_id, :program_id)
           end
         end
       end
