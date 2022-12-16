@@ -1,59 +1,108 @@
-# Тестовое задание Software Engineer(Ruby On Rails)
+## Test and Linter
+[![Test and Linter Check](https://github.com/usernaimandrey/api_travelpayouts/actions/workflows/ruby.yml/badge.svg)](https://github.com/usernaimandrey/api_travelpayouts/actions/workflows/ruby.yml)
 
-## Цель
+Как использовать:
 
-Разработать API сервер, используя возможности Ruby On Rails
+- склонируйте репозеторий:
+  ```bash
+  $ git clone https://github.com/usernaimandrey/api_travelpayouts.git
+  ```
 
-## Дано
+- соберите docker image:
 
-Для этой задачи мы хотим получить бекенд для построения различных приложений: веб или мобильных.
+  ```bash
+  $ make compose-build
+  ```
 
-В приложении есть пользователи и партнерские программы.
-В приложении можно создавать новых пользователей.
-Пользователи могу подписываться на партнеские программы.
-Один пользователь может быть подписан на много программ.
+- запустите приложение:
 
-Схема исходных данных
+  ```bash
+  make compose
+  ```
 
+- приложение стартует на http://0.0.0.0:3000/
+
+- запустить тесты и линтер в docker:
+
+  ```bash
+  make compose-test
+  make compose-lint
+  ```
+
+## EndPoints
+
+1. POST   /api/v1/auth - регистрация
+
+```bash
+curl -X POST -d name="Fa" -d email="vasy_vetrov_2@a.com" -d password="123456" -d password_confirmation="123456"  http://localhost:3000/api/v1/auth
 ```
-Пользователь(
-  id
-  email
-  name
-)
 
-Программа(
-  id
-  title
-  description
-)
+2. POST   /api/v1/sessions - login
+
+```bash
+curl -X POST -d email="a@a.com" -d password="12345" http://localhost:3000/api/v1/sessions
 ```
 
-Пример данных для программ
+3. DELETE /api/v1/sessions - logout
 
-[https://github.com/KosyanMedia/travelpayouts_RoR_test/blob/master/data.json](https://github.com/KosyanMedia/travelpayouts_RoR_test/blob/master/data.json)
+```bash
+curl -X DELETE http://localhost:3000/api/v1/sessions
+```
 
-Нужно реализовать API методы, которые позволят
+4. GET    /api/v1/programs - список програм
 
-- создавать новых пользователей
-- получить информацию по одному пользователю
-- показать список всех имеющихся программ
-- метод, который создает подписку пользователя на программу
-- показать список программ на которые подписан пользователь
-- Метод автокомплита популярных программ. На вход метода приходит строка term. Метод возвращает программы, в которых term является подстрокой title программы. Метод возвращает список программ отсортированных по популярности. От большей популярности, к меньшей. Популярность определяется так: чем больше пользователей подписано на программу, тем она популярней
+```bash
+curl http://0.0.0.0:3000/api/v1/programs
+```
+scope account
 
-## Технические требования
+5. GET    /api/v1/account/users/programs - список программ на которые подписан залогиненый пользователь
 
-- Ruby MRI 2.5+
-- Ruby On Rails > 5.0
-- ActiveRecord
-- Docker
+```bash
+curl -X GET --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs" -d user_id="25" -d program_id="5"  http://localhost:3000/api/v1/account/users/programs
+```
 
-На выходе должен получиться проект на [Github.com](http://github.com/) с инструкцией по запуску. Приложение должно запускаться в Docker
+6. GET    /api/v1/account/users/:id - информация о пользователе
 
-## Бонусные задания
+```bash
+curl -X GET --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs" http://localhost:3000/api/v1/account/users/6
+```
 
-*Эти задания не оцениваются в первую очередь, но будут иметь вес при прочих равных*
+7. POST   /api/v1/account/subscriptions - подписпться на программу
 
-- Реализовать логику и API метод создания бана(блокировки) подписки пользователя на программу. Если пользователь заблокирован в программе, то в списке программ именно этого пользователя она не будет выводиться
-- Покрыть функциональность API сервера тестами
+```bash
+curl -X POST --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs" -d user_id="25" -d program_id="6"  http://localhost:3000/api/v1/account/subscriptions
+```
+
+8. DELETE /api/v1/account/subscriptions/:id - удалить подписку на программу
+
+```bash
+curl -X POST --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs" http://localhost:3000/api/v1/account/subscriptions/10
+```
+
+9. GET    /api/v1/account/programs - список программ доступных пользователю
+
+```bash
+curl --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs" http://localhost:3000/api/v1/account/programs
+```
+
+10. POST /api/v1/account/programs - поиск программы по названию(по вхождению)
+
+```bash
+curl -X POST --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs"  -d term="Kiwi"  http://localhost:3000/api/v1/account/programs/search
+```
+
+scope admin
+
+11. POST   /api/v1/account/admin/banes - бан на подписку в конкретной программе
+
+```bash
+curl -X  POST --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs" -d user_id="2" -d program_id="3" http://localhost:3000//api/v1/account/admin/banes
+```
+
+12. DELETE /api/v1/account/admin/banes/:id - удалить бан
+
+```bash
+curl -X  POST --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNX0.loaxQI5b6oxv5K-MxgnVLyyhKu8Qa8VDrqdbkWKnGNs"
+http://localhost:3000//api/v1/account/admin/banes/3
+```
