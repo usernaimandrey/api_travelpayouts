@@ -33,4 +33,11 @@ class Api::V1::Account::SubscriptionsControllerTest < ActionDispatch::Integratio
     expected = { status: :success }.to_json
     assert { expected == response.body }
   end
+
+  test 'destroy not author' do
+    delete api_v1_account_subscription_path(@program), headers: { Authorization: "Bearer #{@jwt_token}" }
+    expected = { error: I18n.t('pundit.default') }.to_json
+
+    assert { expected == response.body }
+  end
 end

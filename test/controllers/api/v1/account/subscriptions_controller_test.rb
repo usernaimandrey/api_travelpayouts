@@ -39,4 +39,12 @@ class Api::V1::Account::SubscriptionsControllerTest < ActionDispatch::Integratio
     assert_not(subscription)
     assert_response :success
   end
+
+  test '#destroy not author' do
+    delete api_v1_account_subscription_path(@program), headers: { Authorization: "Bearer #{@jwt_token}" }
+    @program.reload
+
+    assert { @program }
+    assert_response :unauthorized
+  end
 end
