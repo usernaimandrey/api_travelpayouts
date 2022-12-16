@@ -11,8 +11,8 @@ module Api
         else
           render json: { status: :unprocessable_entity, error: user.errors.full_messages }
         end
-      rescue StandardError
-        render json: { status: 422, error: I18n.t('user_exist') }
+      rescue UserExistError => e
+        render json: { status: 422, error: e.message }
       end
     end
   end

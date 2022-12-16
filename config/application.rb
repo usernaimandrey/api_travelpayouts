@@ -23,5 +23,6 @@ module ApiTravelpayouts
   class Application < Rails::Application
     config.load_defaults 6.1
     config.api_only = true
+    config.autoload_paths << "#{config.root}/app/errors"
   end
 end

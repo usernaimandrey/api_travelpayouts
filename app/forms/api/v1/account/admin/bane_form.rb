@@ -9,6 +9,6 @@ class Api::V1::Account::Admin::BaneForm < Bane
 
   def bane_exist?
     @bane = Bane.find_by(user_id: user_id, program_id: program_id)
-    raise unless @bane.nil?
+    raise BaneExistError unless @bane.nil?
   end
 end

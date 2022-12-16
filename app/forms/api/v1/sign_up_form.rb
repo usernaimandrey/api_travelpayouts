@@ -21,6 +21,6 @@ class Api::V1::SignUpForm < User
 
   def user_exist
     @user ||= User.find_by(email: email)
-    raise unless @user.nil?
+    raise UserExistError unless @user.nil?
   end
 end

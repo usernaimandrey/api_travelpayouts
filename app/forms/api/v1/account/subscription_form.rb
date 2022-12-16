@@ -9,6 +9,6 @@ class Api::V1::Account::SubscriptionForm < Subscription
 
   def subscriber_exist?
     @subscriber = Subscription.find_by(user_id: user_id, program_id: program_id)
-    raise unless @subscriber.nil?
+    raise SubscripExistError unless @subscriber.nil?
   end
 end

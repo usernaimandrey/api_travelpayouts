@@ -3,6 +3,9 @@
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
+require_relative '../app/errors/user_exist_error'
+require_relative '../app/errors/subscrip_exist_error'
+require_relative '../app/errors/bane_exist_error'
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
